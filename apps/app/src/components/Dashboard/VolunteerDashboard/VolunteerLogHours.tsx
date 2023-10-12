@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next'
 
 import ClearFilters from '@/components/Shared/ClearFilters'
 import GridRefreshButton from '@/components/Shared/GridRefreshButton'
+import { Button } from '@/components/UI/Button'
 import { Spinner } from '@/components/UI/Spinner'
 import { usePostData } from '@/lib/lens-protocol'
 import {
@@ -138,7 +139,9 @@ const VolunteerLogHours: React.FC = () => {
         />
         <GridRefreshButton onClick={refetch} />
       </div>
-
+      <Link href={'../view_hours'}>
+        <Button>Add Volunteer Hours</Button>
+      </Link>
       <div
         className={` w-fit text-ellipsis overflow-hidden ${
           displayIndex == -1 ? 'max-h-[470px]' : 'max-h-[250px]'
@@ -187,6 +190,7 @@ const VolunteerLogHours: React.FC = () => {
               ))}
           </>
         )}
+        B
       </div>
       {displayIndex != -1 && (
         <div
