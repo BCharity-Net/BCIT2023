@@ -5,7 +5,7 @@ import {
   LinkIcon,
   ViewListIcon
 } from '@heroicons/react/outline'
-import { PostFragment, PublicationTypes } from '@lens-protocol/client'
+import { PublicationTypes } from '@lens-protocol/client'
 import { Inter } from '@next/font/google'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
@@ -15,16 +15,12 @@ import ClearFilters from '@/components/Shared/ClearFilters'
 import GridRefreshButton from '@/components/Shared/GridRefreshButton'
 import { Spinner } from '@/components/UI/Spinner'
 import { usePostData } from '@/lib/lens-protocol'
-import {
-  getOpportunityMetadata,
-  isComment,
-  OpportunityMetadata,
-  PostTags
-} from '@/lib/metadata'
+import { OpportunityMetadata, PostTags } from '@/lib/metadata'
 import { useAppPersistStore } from '@/store/app'
 
 import Error from '../Modals/Error'
 import DashboardDropDown from './DashboardDropDown'
+import { MOCK_DATA } from './mockData'
 
 const inter500 = Inter({
   subsets: ['latin'],
@@ -55,18 +51,26 @@ const VolunteerLogHours: React.FC = () => {
   const [indice, setIndice] = useState<number[]>([])
   const [categories, setCategories] = useState<string[]>([])
 
-  useEffect(() => {
-    const _metaData = data
-      .filter(isComment)
-      .map((v) => v.mainPost)
-      .filter((v): v is PostFragment => v.__typename === 'Post')
+  // useEffect(() => {
+  //   const _metaData = data
+  //     .filter(isComment)
+  //     .map((v) => v.mainPost)
+  //     .filter((v): v is PostFragment => v.__typename === 'Post')
 
-    setMetaData(getOpportunityMetadata(_metaData))
-    setIndice(resetIndice())
+  //   setMetaData(getOpportunityMetadata(_metaData))
+  //   setIndice(resetIndice())
+  //   const _categories = new Set<string>()
+  //   metaData.forEach((v) => _categories.add(v.category))
+  //   setCategories(Array.from(_categories))
+  // }, [data])
+
+  useEffect(() => {
+    setMetaData(MOCK_DATA as OpportunityMetadata[])
+    setIndice(Array.from({ length: MOCK_DATA.length }, (_, i) => i))
     const _categories = new Set<string>()
-    metaData.forEach((v) => _categories.add(v.category))
+    MOCK_DATA.forEach((v) => _categories.add(v.category))
     setCategories(Array.from(_categories))
-  }, [data])
+  }, [])
 
   const resetIndice = () => {
     let indice = []
