@@ -84,6 +84,10 @@ const LogHoursButton: FC<LogHoursButtonProps> = ({
   }
 
   return (
+    //TODO: The Log VHR hours input fields needs to be tested and connected with the backend.
+    //      These features are currently for frontend display only!
+    //      The 'hours' and 'comments & proof links' fields likely worked with the backend at some point.
+    //      Working backwards from those fields will give you an idea on how to implement the rest.
     <div>
       <Modal title={t('create')} show={showModal} onClose={onCancel}>
         <div className="mx-12 mt-5">
@@ -93,6 +97,13 @@ const LogHoursButton: FC<LogHoursButtonProps> = ({
               onSubmit={() => handleSubmit((data) => onSubmit(data))}
               className="flex flex-col space-y-2"
             >
+              <TextArea
+                suppressHydrationWarning
+                label={t('job-url')}
+                placeholder={t('job-url-placeholder')}
+                error={!!errors.comments?.type}
+                {...register('comments', { required: false, maxLength: 2048 })}
+              />
               <Input
                 label={t('num-hours')}
                 type="number"
@@ -115,6 +126,17 @@ const LogHoursButton: FC<LogHoursButtonProps> = ({
                 placeholder={t('placeholder')}
                 error={!!errors.comments?.type}
                 {...register('comments', { required: false, maxLength: 1000 })}
+              />
+              <Input
+                label={t('picture-field')}
+                type="file"
+                name="myImage"
+                onChange={(event) => {
+                  //Do something with the image here, ie upload via Lens protocol
+                  if (event.target.files != null) {
+                    console.log(event.target.files[0])
+                  }
+                }}
               />
             </Form>
           ) : (
