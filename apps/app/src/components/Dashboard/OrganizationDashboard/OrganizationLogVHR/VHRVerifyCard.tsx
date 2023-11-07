@@ -3,7 +3,8 @@ import React from 'react'
 
 import { Card } from '@/components/UI/Card'
 import { Spinner } from '@/components/UI/Spinner'
-import { LogVhrRequestMetadata } from '@/lib/metadata'
+
+import { VHRRequest } from './dummyData'
 
 /**
  * Properties of {@link VHRVerifyCard}
@@ -20,7 +21,7 @@ export interface IVHRVerifyCardProps {
   /**
    * Metadata of VHR request to display
    */
-  value: LogVhrRequestMetadata
+  value: VHRRequest
   /**
    * Function that runs when the component is clicked
    */

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { LogVhrRequestMetadata } from '@/lib/metadata'
+import { VHRRequest } from './dummyData'
 
 /**
  * Properties of {@link VHRDetailCard}
@@ -12,7 +12,7 @@ export interface IVHRDetailCardProps {
   /**
    * Metadata of VHR request to display
    */
-  value: LogVhrRequestMetadata
+  value: VHRRequest
 }
 
 /**
