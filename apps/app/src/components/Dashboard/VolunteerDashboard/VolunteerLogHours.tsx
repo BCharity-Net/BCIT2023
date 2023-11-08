@@ -156,7 +156,7 @@ const VolunteerLogHours: React.FC = () => {
               )
               .map((op) => (
                 <div
-                  className={`flex justify-between items-center my-5 tracking-wide w-[800px] min-h-[50px] bg-[#CEBBF8] bg-opacity-[0.50] rounded-md shadow-md hover:bg-opacity-100 hover:cursor-pointer hover:scale-y-110 duration-100 ${
+                  className={`flex justify-between items-center my-5 tracking-wide w-[800px] min-h-[50px] bg-[#CEBBF8] bg-opacity-[0.50] rounded-md shadow-xl hover:bg-opacity-100 hover:cursor-pointer hover:scale-y-110 duration-100 ${
                     inter500.className
                   } ${displayIndex == op ? 'bg-blue-200' : ''}`}
                   key={op}
@@ -189,7 +189,7 @@ const VolunteerLogHours: React.FC = () => {
         )}
       </div>
 
-      <div className="flex flex-col items-center justify-center w-full max-w-4xl mt-5 pt-7">
+      <div className="flex flex-col items-center justify-center w-full max-w-4xl mt-5 pt-7 shadow-xl">
         <div
           className={`flex items-center justify-center w-full px-4 py-5 bg-[#CEBBF8] bg-opacity-[0.30] rounded-md shadow-md ${inter500.className}`}
         >
