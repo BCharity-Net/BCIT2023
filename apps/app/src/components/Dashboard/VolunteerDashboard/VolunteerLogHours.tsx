@@ -196,31 +196,31 @@ const VolunteerLogHours: React.FC = () => {
           <div className="w-[400px]">
             {displayIndex != -1 ? (
               <>
-                <div className="flex justify-around mt-5 text-xl h-fit">
+                <div className="flex items-center justify-start text-xl h-fit">
                   <Link
-                    className="flex items-center p-2"
+                    className="flex items-center justify-start mt-2"
                     href={`/volunteer/${metaData[displayIndex].post_id}`}
                     target="_blank"
                   >
-                    <LinkIcon className="w-5 h-5 mr-4" />
+                    <LinkIcon className="w-5 h-5 mr-2" />
                     {metaData[displayIndex].name}
                   </Link>
                 </div>
-                <div className="flex items-center ml-5 mt-5">
+                <div className="flex items-center justify-start mt-2">
                   <CalendarIcon className="w-5 h-5 mr-2" />
                   {metaData[displayIndex].startDate} -{' '}
                   {metaData[displayIndex].endDate.toString() === ''
                     ? t('present')
                     : metaData[displayIndex].endDate}
                 </div>
-                <div className="flex items-center mx-5 mt-2 whitespace-nowrap">
+                <div className="flex items-center justify-start mt-2 whitespace-nowrap">
                   <ClockIcon className="w-4 h-4 mr-2" />{' '}
                   <div className="text-ellipsis overflow-hidden w-fit max-w-[200px]">
                     {metaData[displayIndex].hoursPerWeek}
                   </div>
                   <div className="ml-2">{t('hours-in-total')}</div>
                 </div>
-                <div className="flex items-center ml-5 mt-2">
+                <div className="flex items-center justify-start mt-2">
                   <ViewListIcon className="w-5 h-5 mr-2" />{' '}
                   {metaData[displayIndex].category}
                 </div>
