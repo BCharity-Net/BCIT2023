@@ -79,5 +79,6 @@ export const testnetVerified = [
   '0x88cc' /** @andrewtest.test */,
   '0x88c7' /**kevin.test **/,
   '0x8d08' /** @nahfam.test (May) */,
+  // '0x928f' /**ryanccc.test*/,
   '0x8983' /** @jarvin.test */
 ]

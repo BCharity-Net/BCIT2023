@@ -108,8 +108,8 @@ const VolunteerLogHours: React.FC = () => {
   }
 
   return (
-    <div className="p-5">
-      <div className="flex py-5 items-center">
+    <div className="flex flex-col items-center justify-center p-5 space-y-4 h-screen">
+      <div className="flex py-5 w-full max-w-4xl items-center">
         <div className="mr-5 h-[50px] z-10">
           <DashboardDropDown
             label={t('sort-by')}
@@ -143,11 +143,7 @@ const VolunteerLogHours: React.FC = () => {
         <GridRefreshButton onClick={refetch} />
       </div>
 
-      <div
-        className={` w-fit text-ellipsis overflow-hidden ${
-          displayIndex == -1 ? 'max-h-[470px]' : 'max-h-[250px]'
-        } `}
-      >
+      <div className="flex flex-col w-full max-w-4xl overflow-auto h-[calc(100vh-200px)]">
         {loading ? (
           <Spinner />
         ) : (
@@ -160,7 +156,7 @@ const VolunteerLogHours: React.FC = () => {
               )
               .map((op) => (
                 <div
-                  className={`flex justify-between items-center my-5 tracking-wide w-[800px] h-[50px] bg-[#CEBBF8] bg-opacity-[0.50] rounded-md shadow-md hover:bg-opacity-100 hover:cursor-pointer hover:scale-y-110 duration-100 ${
+                  className={`flex justify-between items-center my-5 tracking-wide w-[800px] min-h-[50px] bg-[#CEBBF8] bg-opacity-[0.50] rounded-md shadow-md hover:bg-opacity-100 hover:cursor-pointer hover:scale-y-110 duration-100 ${
                     inter500.className
                   } ${displayIndex == op ? 'bg-blue-200' : ''}`}
                   key={op}
@@ -192,48 +188,63 @@ const VolunteerLogHours: React.FC = () => {
           </>
         )}
       </div>
-      {displayIndex != -1 && (
+
+      <div className="flex flex-col items-center justify-center w-full max-w-4xl mt-5 pt-7">
         <div
-          className={`flex my-10 tracking-wide w-[800px] h-[300px] bg-[#CEBBF8] bg-opacity-[0.30] rounded-md shadow-md ${inter500.className}`}
+          className={`flex items-center justify-center w-full px-4 py-5 bg-[#CEBBF8] bg-opacity-[0.30] rounded-md shadow-md ${inter500.className}`}
         >
           <div className="w-[400px]">
-            <div className="flex justify-around mt-5 text-xl h-fit">
-              <Link
-                className="flex items-center p-2"
-                href={`/volunteer/${metaData[displayIndex].post_id}`}
-                target="_blank"
-              >
-                <LinkIcon className="w-5 h-5 mr-4" />
-                {metaData[displayIndex].name}
-              </Link>
-            </div>
-            <div className="flex items-center ml-5 mt-5">
-              <CalendarIcon className="w-5 h-5 mr-2" />
-              {metaData[displayIndex].startDate} -{' '}
-              {metaData[displayIndex].endDate.toString() == ''
-                ? t('present')
-                : metaData[displayIndex].endDate}
-            </div>
-            <div className="flex items-center mx-5 mt-2 whitespace-nowrap">
-              <ClockIcon className="w-4 h-4 mr-2" />{' '}
-              <div className="text-ellipsis overflow-hidden w-fit max-w-[200px]">
-                {metaData[displayIndex].hoursPerWeek}
-              </div>
-              <div className="ml-2">{t('hours-in-total')}</div>
-            </div>
-            <div className="flex items-center ml-5 mt-2">
-              <ViewListIcon className="w-5 h-5 mr-2" />{' '}
-              {metaData[displayIndex].category}
-            </div>
+            {displayIndex != -1 ? (
+              <>
+                <div className="flex justify-around mt-5 text-xl h-fit">
+                  <Link
+                    className="flex items-center p-2"
+                    href={`/volunteer/${metaData[displayIndex].post_id}`}
+                    target="_blank"
+                  >
+                    <LinkIcon className="w-5 h-5 mr-4" />
+                    {metaData[displayIndex].name}
+                  </Link>
+                </div>
+                <div className="flex items-center ml-5 mt-5">
+                  <CalendarIcon className="w-5 h-5 mr-2" />
+                  {metaData[displayIndex].startDate} -{' '}
+                  {metaData[displayIndex].endDate.toString() === ''
+                    ? t('present')
+                    : metaData[displayIndex].endDate}
+                </div>
+                <div className="flex items-center mx-5 mt-2 whitespace-nowrap">
+                  <ClockIcon className="w-4 h-4 mr-2" />{' '}
+                  <div className="text-ellipsis overflow-hidden w-fit max-w-[200px]">
+                    {metaData[displayIndex].hoursPerWeek}
+                  </div>
+                  <div className="ml-2">{t('hours-in-total')}</div>
+                </div>
+                <div className="flex items-center ml-5 mt-2">
+                  <ViewListIcon className="w-5 h-5 mr-2" />{' '}
+                  {metaData[displayIndex].category}
+                </div>
+              </>
+            ) : (
+              // Display a default message or leave this empty if no row is selected
+              <p>Select a row to see details.</p>
+            )}
           </div>
           <div className="h-[250px] self-center w-[2px] bg-[#D8C0EC]"></div>
           <div className="flex justify-around w-[400px]">
-            <div className="w-[350px] mt-5 mb-5 text-ellipsis overflow-hidden">
-              {metaData[displayIndex].description}
-            </div>
+            {displayIndex != -1 ? (
+              <div className="w-[350px] mt-5 mb-5 text-ellipsis overflow-hidden">
+                {metaData[displayIndex].description}
+              </div>
+            ) : (
+              // You can also add default content here if needed
+              <div className="w-[350px] mt-5 mb-5 text-center">
+                Description will appear here when a row is selected.
+              </div>
+            )}
           </div>
         </div>
-      )}
+      </div>
       {error && <Error message={error}></Error>}
     </div>
   )
