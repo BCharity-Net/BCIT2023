@@ -41,14 +41,20 @@ export interface UseLogHoursReturn {
    *
    * @param profile The profile of the user trying to log hours
    * @param hoursToVerify The number of hours to log
+   * @param organizationId Organization ID.
+   * @param jobUrl The external URL for the job opportunity
+   * @param picture An optional picture to upload as proof of work
    * @param comments Any comments
    * @param onSuccess Callback function to be trigged on succes
    * @returns
    */
   logHours: (
     profile: ProfileFragment | null,
+    organizationId: string,
+    jobUrl: string,
     hoursToVerify: string,
     comments: string,
+    picture: string,
     onSuccess?: VoidFunction
   ) => Promise<void>
 }
@@ -85,9 +91,13 @@ const useLogHours = (params: UseLogHoursParams): UseLogHoursReturn => {
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
+  //TODO: implement organizationId, jobUrl, picture fields.
   const logHours = async (
     profile: ProfileFragment | null,
+    organizationId: string,
+    jobUrl: string,
     hoursToVerify: string,
+    picture: string,
     comments: string,
     onSuccess?: VoidFunction
   ) => {

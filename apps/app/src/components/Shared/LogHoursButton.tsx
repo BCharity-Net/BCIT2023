@@ -32,8 +32,11 @@ export interface LogHoursButtonProps {
 }
 
 export interface IVhrVerificationFormProps {
+  orgId: string
+  jobUrl: string
   hoursToVerify: string
   comments: string
+  picture: string
 }
 
 /**
@@ -77,8 +80,11 @@ const LogHoursButton: FC<LogHoursButtonProps> = ({
   const onSubmit = async (formData: IVhrVerificationFormProps) => {
     await logHours(
       currentUser,
+      formData.orgId,
+      formData.jobUrl,
       formData.hoursToVerify,
       formData.comments,
+      formData.picture,
       onCancel
     )
   }
@@ -88,6 +94,7 @@ const LogHoursButton: FC<LogHoursButtonProps> = ({
     //      These features are currently for frontend display only!
     //      The 'hours' and 'comments & proof links' fields likely worked with the backend at some point.
     //      Working backwards from those fields will give you an idea on how to implement the rest.
+    //      See useLogHours.ts for more
     <div>
       <Modal title={t('create')} show={showModal} onClose={onCancel}>
         <div className="mx-12 mt-5">
@@ -97,6 +104,14 @@ const LogHoursButton: FC<LogHoursButtonProps> = ({
               onSubmit={() => handleSubmit((data) => onSubmit(data))}
               className="flex flex-col space-y-2"
             >
+              <Input
+                type="text"
+                label={t('org-id')}
+                value={organizationId}
+                placeholder={organizationId}
+                error={!!errors.comments?.type}
+                {...register('orgId', { required: false, maxLength: 1000 })}
+              />
               <TextArea
                 suppressHydrationWarning
                 label={t('job-url')}
@@ -132,7 +147,7 @@ const LogHoursButton: FC<LogHoursButtonProps> = ({
                 type="file"
                 name="myImage"
                 onChange={(event) => {
-                  //Do something with the image here, ie upload via Lens protocol
+                  //Do something with the image here, ie call {...register('picture', )} and upload to lens in useLogHours.ts
                   if (event.target.files != null) {
                     console.log(event.target.files[0])
                   }
