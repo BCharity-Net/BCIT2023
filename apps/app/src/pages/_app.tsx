@@ -1,6 +1,7 @@
 import '../styles.css'
 
 import { ThirdwebProvider } from '@thirdweb-dev/react'
+import { UniPassConnector } from '@unipasswallet/wagmi-connector'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'next-themes'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
@@ -28,6 +29,13 @@ const connectors = () => {
       options: {
         projectId: WALLET_CONNECT_PROJECT_ID ? WALLET_CONNECT_PROJECT_ID : '',
         showQrModal: true
+      }
+    }),
+    new UniPassConnector({
+      chains,
+      options: {
+        chainId: polygon.id || polygonMumbai,
+        returnEmail: false
       }
     })
   ]

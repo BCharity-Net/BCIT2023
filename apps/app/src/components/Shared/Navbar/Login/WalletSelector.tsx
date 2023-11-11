@@ -2,6 +2,7 @@ import SwitchNetwork from '@components/Shared/SwitchNetwork'
 import { Button } from '@components/UI/Button'
 import { XCircleIcon } from '@heroicons/react/solid'
 import { ProfileFragment as Profile } from '@lens-protocol/client'
+import { UniPassConnector } from '@unipasswallet/wagmi-connector'
 import { signMessage } from '@wagmi/core'
 import clsx from 'clsx'
 import React, { Dispatch, FC, useEffect, useState } from 'react'
@@ -76,6 +77,7 @@ const WalletSelector: FC<WalletSelectorProps> = ({
 
   const onLoginClick = async (connector: Connector) => {
     if (isConnected) {
+      console.log('Hello There, Logging in')
       await disconnectAsync()
     }
 
@@ -83,6 +85,7 @@ const WalletSelector: FC<WalletSelectorProps> = ({
 
     if (connect instanceof InjectedConnector) {
       try {
+        console.log('Hello')
         setLoginError(false)
 
         const walletClient = await connect.getWalletClient()
@@ -106,6 +109,8 @@ const WalletSelector: FC<WalletSelectorProps> = ({
         setLoginErrorMessage(e.message)
         setLoginError(true)
       }
+    } else if (connect instanceof UniPassConnector) {
+      console.log('Hello there')
     }
   }
 
@@ -122,6 +127,9 @@ const WalletSelector: FC<WalletSelectorProps> = ({
       }
     }
   }, [profiles, setCurrentUser, setHasProfile, setIsAuthenticated, setProfiles])
+
+  console.log(`The CHAIN_ID: ${CHAIN_ID}`)
+  console.log(`The 'chain?.id': ${chain?.id}`)
 
   return activeConnector?.id ? (
     <div className="space-y-3">
