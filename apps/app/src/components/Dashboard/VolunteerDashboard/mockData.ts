@@ -9,7 +9,6 @@ export const MOCK_DATA = [
     description: 'Sample description.',
     imageUrl: 'http://sample-image-url1.com',
     applicationRequired: true
-    // ... any other properties depending on the version
   },
   {
     name: 'Volunteer Teach',
