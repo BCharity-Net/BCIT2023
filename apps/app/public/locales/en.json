@@ -631,6 +631,7 @@
       "apply-button": {
         "button-label": "Log hours",
         "create": "Create VHR request",
+        "org-id": "Organization ID",
         "job-url": "Website URL of the volunteer opportunity",
         "job-url-placeholder": "https://rabbit.org/volunteer/",
         "picture-field": "Pictures as proof (optional)",
