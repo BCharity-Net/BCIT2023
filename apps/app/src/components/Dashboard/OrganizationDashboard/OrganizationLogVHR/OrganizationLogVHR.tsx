@@ -36,13 +36,13 @@ const OrganizationLogVHRTab: React.FC = () => {
   const { t } = useTranslation('common', {
     keyPrefix: 'components.dashboard.organization.log-vhr'
   })
-  const { t: e } = useTranslation('common', { keyPrefix: 'errors' })
+  // const { t: e } = useTranslation('common', { keyPrefix: 'errors' })
 
   const { createComment } = useCreateComment()
 
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<VHRRequest[]>([])
-  const [error, setError] = useState<string | null>(null)
+  const [error] = useState<string | null>(null)
 
   const { currentUser: profile } = useAppPersistStore()
 
@@ -258,7 +258,7 @@ const OrganizationLogVHRTab: React.FC = () => {
         </div>
 
         {/* Category Dropdown */}
-        <div className="flex flex-wrap gap-y-5 justify-around w-[420px] items-center">
+        <div className="flex flex-wrap gap-y-5 justify-around w-full items-center">
           <div className="h-[50px] z-10 ">
             <DashboardDropDown
               label={t('filter')}
@@ -269,65 +269,74 @@ const OrganizationLogVHRTab: React.FC = () => {
               selected={selectedCategory}
             />
           </div>
+          {/* <button
+            className="bg-red-500 text-white px-4 py-2 rounded-md"
+            onClick={() => {
+              setSelectedCategory('')
+              setSearchValue('')
+            }}
+          >
+            {t('clear_filters')}
+          </button> */}
         </div>
-      </div>
 
-      {/* Data Cards */}
-      <Card className="px-4 py-3 mt-10">
-        <div className="flex flex-col">
-          {/* Data loading and filtering */}
-          {!loading ? (
-            <>
-              <div className="flex flex-col min-h-96 overflow-auto">
-                {data
-                  .filter((value) => {
-                    return (
-                      (selectedCategory === '' ||
-                        selectedCategory === value.opportunity.category) &&
-                      testSearch(
-                        `${value.opportunity.category} ${value.opportunity.startDate} ${value.opportunity.endDate} ${value.from.handle} ${value.opportunity.name}`,
-                        searchValue
+        {/* Data Cards */}
+        <Card className="px-4 py-3 mt-10">
+          <div className="flex flex-col">
+            {/* Data loading and filtering */}
+            {!loading ? (
+              <>
+                <div className="flex flex-col min-h-96 overflow-auto">
+                  {data
+                    .filter((value) => {
+                      return (
+                        (selectedCategory === '' ||
+                          selectedCategory === value.opportunity.category) &&
+                        testSearch(
+                          `${value.opportunity.category} ${value.opportunity.startDate} ${value.opportunity.endDate} ${value.from.handle} ${value.opportunity.name}`,
+                          searchValue
+                        )
                       )
-                    )
-                  })
-                  .map((value) => {
-                    const selected = value.opportunity.post_id === selectedId
+                    })
+                    .map((value) => {
+                      const selected = value.opportunity.post_id === selectedId
 
-                    return (
-                      <VHRVerifyCard
-                        pending={!!pendingIds[value.opportunity.post_id]}
-                        selected={selected}
-                        key={value.opportunity.post_id}
-                        value={value}
-                        onClick={() =>
-                          setSelectedId(
-                            selected ? '' : value.opportunity.post_id
-                          )
-                        }
-                        onAcceptClick={() =>
-                          onAcceptClick(value.opportunity.post_id)
-                        }
-                        onRejectClick={() =>
-                          onRejectClick(value.opportunity.post_id)
-                        }
-                      />
-                    )
-                  })}
-              </div>
-              {selectedValue && <VHRDetailCard value={selectedValue} />}
-            </>
-          ) : (
-            <Spinner />
-          )}
-          {shouldShowError() && (
-            <Error
-              message={`${t('generic-front')}${getErrorMessage()}${t(
-                'generic-back'
-              )}`}
-            ></Error>
-          )}
-        </div>
-      </Card>
+                      return (
+                        <VHRVerifyCard
+                          pending={!!pendingIds[value.opportunity.post_id]}
+                          selected={selected}
+                          key={value.opportunity.post_id}
+                          value={value}
+                          onClick={() =>
+                            setSelectedId(
+                              selected ? '' : value.opportunity.post_id
+                            )
+                          }
+                          onAcceptClick={() =>
+                            onAcceptClick(value.opportunity.post_id)
+                          }
+                          onRejectClick={() =>
+                            onRejectClick(value.opportunity.post_id)
+                          }
+                        />
+                      )
+                    })}
+                </div>
+                {selectedValue && <VHRDetailCard value={selectedValue} />}
+              </>
+            ) : (
+              <Spinner />
+            )}
+            {shouldShowError() && (
+              <Error
+                message={`${t('generic-front')}${getErrorMessage()}${t(
+                  'generic-back'
+                )}`}
+              ></Error>
+            )}
+          </div>
+        </Card>
+      </div>
     </div>
   )
 }

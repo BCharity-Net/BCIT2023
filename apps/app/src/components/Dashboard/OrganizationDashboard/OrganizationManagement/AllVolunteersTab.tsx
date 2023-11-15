@@ -1,11 +1,5 @@
 import { SearchIcon } from '@heroicons/react/outline'
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useState
-} from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { GridItemSix, GridLayout } from '@/components/GridLayout'
@@ -16,8 +10,9 @@ import { useVolunteers } from '@/lib/lens-protocol'
 import { useAppPersistStore } from '@/store/app'
 
 import { DashboardDropDown } from '../../VolunteerDashboard'
+// import VolunteerDataCard from './VolunteerDataCard'
+import { dummyVolunteers } from './dummyVolunteers'
 import PurpleBox from './PurpleBox'
-import VolunteerDataCard from './VolunteerDataCard'
 
 /**
  * Reference to the {@link AllVolunteersTab} component;
@@ -46,14 +41,28 @@ export interface IAllVolunteersTabProps {
  * Volunteers are fetched using the {@link useVolunteers} hook, given the organization's
  * profile.
  */
+
 const AllVolunteersTab = forwardRef<AllRef | null, IAllVolunteersTabProps>(
   ({ hidden }, ref) => {
     const { t } = useTranslation('common', {
       keyPrefix: 'components.dashboard.organization.management.all'
     })
+
     const { currentUser: profile } = useAppPersistStore()
 
-    const { loading, data, error, refetch } = useVolunteers({ profile })
+    const volunteersHook = useVolunteers({ profile })
+
+    const useDummyData = true // Toggle this flag for dummy data or actual data
+    const { loading, data, error, refetch } = useDummyData
+      ? {
+          loading: false,
+          data: dummyVolunteers,
+          error: null,
+          refetch: () => {}
+        }
+      : volunteersHook
+
+    // const { loading, data, error, refetch } = useVolunteers({ profile })
 
     useImperativeHandle(ref, () => ({
       refetch
@@ -61,9 +70,9 @@ const AllVolunteersTab = forwardRef<AllRef | null, IAllVolunteersTabProps>(
 
     const [selectedId, setSelectedId] = useState<string>('')
 
-    const selectedValue = useMemo(() => {
-      return data.find((val) => val.profile.id === selectedId) ?? null
-    }, [data, selectedId])
+    // const selectedValue = useMemo(() => {
+    //   return data.find((val) => val.profile.id === selectedId) ?? null
+    // }, [data, selectedId])
 
     const [searchValue, setSearchValue] = useState('')
     const [categories, setCategories] = useState<Set<string>>(new Set())
@@ -160,13 +169,13 @@ const AllVolunteersTab = forwardRef<AllRef | null, IAllVolunteersTabProps>(
               </div>
             </Card>
           </GridItemSix>
-          <GridItemSix>
+          {/* <GridItemSix>
             {selectedId !== '' && !!selectedValue && (
               <div className="pb-10">
                 <VolunteerDataCard vol={selectedValue} />
               </div>
             )}
-          </GridItemSix>
+          </GridItemSix> */}
         </GridLayout>
       </div>
     )
